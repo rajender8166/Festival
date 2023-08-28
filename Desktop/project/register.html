@@ -1,0 +1,428 @@
+<!DOCTYPE html>
+<html>
+
+<body>
+    <style>
+        @import url(https://fonts.googleapis.com/css?family=Cookie|Raleway:300,700,400);
+
+        * {
+            box-sizing: border-box;
+            font-size: 1em;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            background: url(https://images.unsplash.com/photo-1594623930572-300a3011d9ae?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8Mnx8ZGolMjBjb250cm9sbGVyfGVufDB8fDB8fA%3D%3D&w=1000&q=80) center no-repeat;
+            background-size: cover;
+            color: black;
+            font-size: 18px;
+            font-family: 'Raleway', sans-serif;
+        }
+
+        .container {
+            border-radius: 0.5em;
+            box-shadow: 0 0 1em 0 rgba(51, 51, 51, 0.25);
+            display: block;
+            max-width: 480px;
+            overflow: hidden;
+            -webkit-transform: translate(-50%, -50%);
+            -ms-transform: translate(-50%, -50%);
+            transform: translate(-50%, -50%);
+            padding: 2em;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            z-index: 1;
+            width: 98%;
+        }
+
+        .container:before {
+            background: url(https://images.unsplash.com/photo-1594623930572-300a3011d9ae?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8Mnx8ZGolMjBjb250cm9sbGVyfGVufDB8fDB8fA%3D%3D&w=1000&q=80) center no-repeat;
+            background-size: cover;
+            content: '';
+            -webkit-filter: blur(10px);
+            filter: blur(10px);
+            height: 100vh;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            z-index: -1;
+            -webkit-transform: translate(-50%, -50%);
+            -ms-transform: translate(-50%, -50%);
+            transform: translate(-50%, -50%);
+            width: 100vw;
+        }
+
+        .container:after {
+            content: '';
+            display: block;
+            height: 100%;
+            position: absolute;
+            top: 0;
+            left: 0;
+            z-index: -1;
+            width: 100%;
+        }
+
+        form button.submit {
+            background: rgba(255, 255, 255, 0.25);
+            border: 1px solid #333;
+            line-height: 1em;
+            padding: 0.5em 0.5em;
+            -webkit-transition: all 0.25s;
+            transition: all 0.25s;
+        }
+
+        .container:hover {
+            background: #03e9f4;
+            color: white;
+            border-radius: 5px;
+            box-shadow: 0 0 5px #03e9f4,
+                0 0 25px #03e9f4,
+                0 0 50px #03e9f4,
+                0 0 100px #03e9f4;
+        }
+
+        form button:hover,
+        form button:focus,
+        form button:active,
+        form button.loading {
+            background: #333;
+            color: #fff;
+            outline: none;
+        }
+
+        form button.success {
+            background: #27ae60;
+            border-color: #27ae60;
+            color: #fff;
+        }
+
+        @-webkit-keyframes spin {
+            from {
+                transform: rotate(0deg);
+            }
+
+            to {
+                transform: rotate(360deg);
+            }
+        }
+
+        @keyframes spin {
+            from {
+                transform: rotate(0deg);
+            }
+
+            to {
+                transform: rotate(360deg);
+            }
+        }
+
+        form button span.loading-spinner {
+            -webkit-animation: spin 0.5s linear infinite;
+            animation: spin 0.5s linear infinite;
+            border: 2px solid #fff;
+            border-top-color: transparent;
+            border-radius: 50%;
+            display: inline-block;
+            height: 1em;
+            width: 1em;
+        }
+
+        form label {
+            border-bottom: 1px solid #333;
+            display: block;
+            font-size: 1.25em;
+            margin-bottom: 0.5em;
+            -webkit-transition: all 0.25s;
+            transition: all 0.25s;
+        }
+
+        form label.col-one-half {
+            float: left;
+            width: 50%;
+        }
+
+        form label.col-one-half:nth-of-type(even) {
+            border-left: 1px solid #333;
+            padding-left: 0.25em;
+        }
+
+        form label input {
+            background: none;
+            border: none;
+            line-height: 1em;
+            font-weight: 300;
+            padding: 0.125em 0.25em;
+            width: 100%;
+        }
+
+        form label input:focus {
+            outline: none;
+        }
+
+        form label input:-webkit-autofill {
+            background-color: transparent !important;
+        }
+
+        form label span.label-text {
+            display: block;
+            font-size: 0.5em;
+            font-weight: bold;
+            padding-left: 0.5em;
+            text-transform: uppercase;
+            -webkit-transition: all 0.25s;
+            transition: all 0.25s;
+        }
+
+        form label.checkbox {
+            border-bottom: 0;
+            text-align: center;
+        }
+
+        form label.checkbox input {
+            display: none;
+        }
+
+        form label.checkbox span {
+            font-size: 0.5em;
+        }
+
+        form label.checkbox span:before {
+            content: '\e157';
+            display: inline-block;
+            font-family: 'Glyphicons Halflings';
+            font-size: 1.125em;
+            padding-right: 0.25em;
+            position: relative;
+            top: 1px;
+        }
+
+        form label.checkbox input:checked+span:before {
+            content: '\e067';
+        }
+
+        form label.invalid {
+            border-color: #c0392b !important;
+        }
+
+        form label.invalid span.label-text {
+            color: #c0392b;
+        }
+
+        form label.password {
+            position: relative;
+        }
+
+        form label.password button.toggle-visibility {
+            background: none;
+            border: none;
+            cursor: pointer;
+            font-size: 0.75em;
+            line-height: 1em;
+            position: absolute;
+            top: 50%;
+            right: 0.5em;
+            text-align: center;
+            -webkit-transform: translateY(-50%);
+            -ms-transform: translateY(-50%);
+            transform: translateY(-50%);
+            -webkit-transition: all 0.25s;
+            transition: all 0.25s;
+        }
+
+        form label.password button.toggle-visibility:hover,
+        form label.password button.toggle-visibility:focus,
+        form label.password button.toggle-visibility:active {
+            color: #000;
+            outline: none;
+        }
+
+        form label.password button.toggle-visibility span {
+            vertical-align: middle;
+        }
+
+        h1 {
+            font-size: 3em;
+            margin: 0 0 0.5em 0;
+            text-align: center;
+            font-family: 'Cookie', cursive;
+        }
+
+        h1 img {
+            height: auto;
+            margin: 0 auto;
+            max-width: 240px;
+            width: 100%;
+        }
+
+        html {
+            font-size: 18px;
+            height: 100%;
+        }
+
+        .text-center {
+            text-align: center;
+        }
+
+        .text-center a {
+            position: relative;
+            display: inline-block;
+            padding: 10px 20px;
+            color: black;
+            font-size: 16px;
+            text-decoration: none;
+            text-transform: uppercase;
+            overflow: hidden;
+            transition: .5s;
+            margin-top: 40px;
+            letter-spacing: 10px
+        }
+
+        .text-center a:hover {
+            background: white;
+            color: black;
+            border-radius: 5px;
+            box-shadow: 0 0 5px #03e9f4,
+                0 0 25px #03e9f4,
+                0 0 50px #03e9f4,
+                0 0 100px #03e9f4;
+        }
+
+        .text-center a span {
+            position: absolute;
+            display: block;
+        }
+
+        .text-center a span:nth-child(1) {
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, #03e9f4);
+            animation: btn-anim1 1s linear infinite;
+        }
+
+        @keyframes btn-anim1 {
+            0% {
+                left: -100%;
+            }
+
+            50%,
+            100% {
+                left: 100%;
+            }
+        }
+
+        .text-center a span:nth-child(2) {
+            top: -100%;
+            right: 0;
+            width: 2px;
+            height: 100%;
+            background: linear-gradient(180deg, transparent, #03e9f4);
+            animation: btn-anim2 1s linear infinite;
+            animation-delay: .25s
+        }
+
+        @keyframes btn-anim2 {
+            0% {
+                top: -100%;
+            }
+
+            50%,
+            100% {
+                top: 100%;
+            }
+        }
+
+        .text-center a span:nth-child(3) {
+            bottom: 0;
+            right: -100%;
+            width: 100%;
+            height: 2px;
+            background: linear-gradient(270deg, transparent, #03e9f4);
+            animation: btn-anim3 1s linear infinite;
+            animation-delay: .5s
+        }
+
+        @keyframes btn-anim3 {
+            0% {
+                right: -100%;
+            }
+
+            50%,
+            100% {
+                right: 100%;
+            }
+        }
+
+        .text-center a span:nth-child(4) {
+            bottom: -100%;
+            left: 0;
+            width: 2px;
+            height: 100%;
+            background: linear-gradient(360deg, transparent, #03e9f4);
+            animation: btn-anim4 1s linear infinite;
+            animation-delay: .75s
+        }
+
+        @keyframes btn-anim4 {
+            0% {
+                bottom: -100%;
+            }
+
+            50%,
+            100% {
+                bottom: 100%;
+            }
+        }
+    </style>
+    <div class="container">
+        <header>
+            <h1>
+                <a href="#">
+                </a>
+            </h1>
+        </header>
+        <h1 class="text-center">Register</h1>
+        <form class="registration-form" action="conn.php" method="post">
+            <label class="col-one-half">
+                <span class="label-text">First Name</span>
+                <input type="text" class="form-contol" id="firstName" name="firstName">
+            </label>
+            <label class="col-one-half">
+                <span class="label-text">Last Name</span>
+                <input type="text" class="form-contol" id="lastName" name="lastName">
+            </label>
+            <label>
+                <span class="label-text">Email</span>
+                <input type="text" class="form-contol" id="email" name="email">
+            </label>
+            <label class="password">
+                <span class="label-text">Password</span>
+                <button class="toggle-visibility" title="toggle password visibility" tabindex="-1">
+                    <span class="glyphicon glyphicon-eye-close"></span>
+                </button>
+                <input type="password"  class="form-control" id="password" name="password">
+            </label>
+            <label class="checkbox">
+                <input type="checkbox" name="newsletter">
+                <span>Sign me up for the weekly newsletter.</span>
+            </label>
+            <div class="text-center">
+                <a href="login.html">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                    Submit
+                </a>
+            </div>
+        </form>
+    </div>
+
+    <script src="register.js"></script>
+</body>
+
+</html>
